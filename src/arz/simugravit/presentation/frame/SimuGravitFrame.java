@@ -1,18 +1,31 @@
 package arz.simugravit.presentation.frame;
 
 import javax.swing.JFrame;
+
 import java.awt.GridBagLayout;
+
 import javax.swing.JPanel;
+
 import java.awt.GridBagConstraints;
+
 import javax.swing.border.TitledBorder;
+
 import java.awt.Insets;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import arz.simugravit.application.SimulationManager;
+import arz.simugravit.presentation.panel.GraphPanel;
+
 public class SimuGravitFrame extends JFrame {
+
 	public SimuGravitFrame() {
+
 		setTitle("Simu Gravit V1.0");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 0, 0, 0 };
 		gridBagLayout.rowHeights = new int[] { 0, 0, 0 };
@@ -30,11 +43,18 @@ public class SimuGravitFrame extends JFrame {
 		gbc__graphGroup.gridy = 0;
 		getContentPane().add(_graphGroup, gbc__graphGroup);
 		GridBagLayout gbl__graphGroup = new GridBagLayout();
-		gbl__graphGroup.columnWidths = new int[] { 0 };
-		gbl__graphGroup.rowHeights = new int[] { 0 };
-		gbl__graphGroup.columnWeights = new double[] { Double.MIN_VALUE };
-		gbl__graphGroup.rowWeights = new double[] { Double.MIN_VALUE };
+		gbl__graphGroup.columnWidths = new int[] { 0, 0 };
+		gbl__graphGroup.rowHeights = new int[] { 0, 0 };
+		gbl__graphGroup.columnWeights = new double[] { 1.0, Double.MIN_VALUE };
+		gbl__graphGroup.rowWeights = new double[] { 1.0, Double.MIN_VALUE };
 		_graphGroup.setLayout(gbl__graphGroup);
+
+		GraphPanel graphPanel = new GraphPanel();
+		GridBagConstraints gbc_graphPanel = new GridBagConstraints();
+		gbc_graphPanel.fill = GridBagConstraints.BOTH;
+		gbc_graphPanel.gridx = 0;
+		gbc_graphPanel.gridy = 0;
+		_graphGroup.add(graphPanel, gbc_graphPanel);
 
 		JPanel _simuGroup = new JPanel();
 		_simuGroup.setBorder(new TitledBorder(null, "Simulation", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -115,6 +135,7 @@ public class SimuGravitFrame extends JFrame {
 		gbc__pasSpaFld.gridy = 0;
 		_spatialResPanel.add(_pasSpaFld, gbc__pasSpaFld);
 		_pasSpaFld.setColumns(10);
+		_pasSpaFld.setText(String.valueOf(SimulationManager.getInstance().getPasSpatial()));
 
 		JLabel spatiaUnitLbl = new JLabel("M\u00E8tres");
 		GridBagConstraints gbc_spatiaUnitLbl = new GridBagConstraints();
@@ -145,6 +166,7 @@ public class SimuGravitFrame extends JFrame {
 
 		_pasTempFld = new JTextField();
 		_pasTempFld.setColumns(10);
+		_pasTempFld.setText(String.valueOf(SimulationManager.getInstance().getPasTemp()));
 		GridBagConstraints gbc__pasTempFld = new GridBagConstraints();
 		gbc__pasTempFld.fill = GridBagConstraints.HORIZONTAL;
 		gbc__pasTempFld.insets = new Insets(0, 2, 5, 5);
