@@ -8,6 +8,11 @@ import javax.swing.JPanel;
 public class GraphPanel extends JPanel{
 
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8794067148313114285L;
+
 	public GraphPanel() {
 		
 		setBackground(Color.WHITE);
@@ -21,6 +26,10 @@ public class GraphPanel extends JPanel{
 		
 		g.setColor(Color.RED);
 		g.fillOval(50, 50, 10, 10);
+		
+		
+		g.setColor(Color.RED);
+		g.fillOval(500, 500, 10, 10);
 		
 		
 	}
