@@ -13,9 +13,15 @@ public class GraphPanel extends JPanel{
 	 */
 	private static final long serialVersionUID = 8794067148313114285L;
 
-	public GraphPanel() {
+	public GraphPanel(int width, int height) {
 		
+		setSize(width, height);
+		setPreferredSize(getSize());
 		setBackground(Color.WHITE);
+		
+		
+		
+		
 		
 	}
 	
