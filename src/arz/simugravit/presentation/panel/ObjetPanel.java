@@ -3,12 +3,18 @@ package arz.simugravit.presentation.panel;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
+
+import arz.simugravit.presentation.controller.GraphFrameController;
+
+import javax.swing.JButton;
 
 public class ObjetPanel extends JPanel {
 	/**
@@ -22,6 +28,7 @@ public class ObjetPanel extends JPanel {
 	private JTextField _massFld;
 
 	private final int _num;
+	private JButton _setPositionBtn;
 
 	public ObjetPanel(int num) {
 
@@ -72,7 +79,7 @@ public class ObjetPanel extends JPanel {
 		JLabel YLbl = new JLabel("Y : ");
 		GridBagConstraints gbc_YLbl = new GridBagConstraints();
 		gbc_YLbl.anchor = GridBagConstraints.EAST;
-		gbc_YLbl.insets = new Insets(0, 0, 0, 5);
+		gbc_YLbl.insets = new Insets(0, 0, 5, 5);
 		gbc_YLbl.gridx = 0;
 		gbc_YLbl.gridy = 1;
 		positionGroup.add(YLbl, gbc_YLbl);
@@ -80,7 +87,7 @@ public class ObjetPanel extends JPanel {
 		_posYFld = new JTextField();
 		_posYFld.setColumns(10);
 		GridBagConstraints gbc_posYFld = new GridBagConstraints();
-		gbc_posYFld.insets = new Insets(0, 0, 0, 5);
+		gbc_posYFld.insets = new Insets(0, 0, 5, 5);
 		gbc_posYFld.fill = GridBagConstraints.HORIZONTAL;
 		gbc_posYFld.gridx = 1;
 		gbc_posYFld.gridy = 1;
@@ -88,9 +95,36 @@ public class ObjetPanel extends JPanel {
 
 		JLabel xUnitLbl = new JLabel("m\u00E8tre(s)");
 		GridBagConstraints gbc_xUnitLbl = new GridBagConstraints();
+		gbc_xUnitLbl.insets = new Insets(0, 0, 5, 0);
 		gbc_xUnitLbl.gridx = 2;
 		gbc_xUnitLbl.gridy = 1;
 		positionGroup.add(xUnitLbl, gbc_xUnitLbl);
+
+		JPanel positionBtnPanel = new JPanel();
+		GridBagConstraints gbc_positionBtnPanel = new GridBagConstraints();
+		gbc_positionBtnPanel.gridwidth = 3;
+		gbc_positionBtnPanel.fill = GridBagConstraints.HORIZONTAL;
+		gbc_positionBtnPanel.gridx = 0;
+		gbc_positionBtnPanel.gridy = 2;
+		positionGroup.add(positionBtnPanel, gbc_positionBtnPanel);
+		GridBagLayout gbl_positionBtnPanel = new GridBagLayout();
+		gbl_positionBtnPanel.columnWidths = new int[] { 0, 0, 0 };
+		gbl_positionBtnPanel.rowHeights = new int[] { 0, 0, 0 };
+		gbl_positionBtnPanel.columnWeights = new double[] { 0.0, 0.0, Double.MIN_VALUE };
+		gbl_positionBtnPanel.rowWeights = new double[] { 0.0, 0.0, Double.MIN_VALUE };
+		positionBtnPanel.setLayout(gbl_positionBtnPanel);
+
+		_setPositionBtn = new JButton("import");
+		GridBagConstraints gbc_setPositionBtn = new GridBagConstraints();
+		gbc_setPositionBtn.gridx = 0;
+		gbc_setPositionBtn.gridy = 0;
+		positionBtnPanel.add(_setPositionBtn, gbc_setPositionBtn);
+
+		JButton centerBtn = new JButton("Centrer");
+		GridBagConstraints gbc_centerBtn = new GridBagConstraints();
+		gbc_centerBtn.gridx = 1;
+		gbc_centerBtn.gridy = 0;
+		positionBtnPanel.add(centerBtn, gbc_centerBtn);
 
 		JPanel vitesseGroup = new JPanel();
 		vitesseGroup.setBorder(new TitledBorder(null, "Vitesse", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -203,6 +237,23 @@ public class ObjetPanel extends JPanel {
 		gbc__isMobilChck.gridx = 1;
 		gbc__isMobilChck.gridy = 0;
 		propGroup.add(_isMobilChck, gbc__isMobilChck);
+
+		hookListener();
+	}
+
+	private void hookListener() {
+
+		_setPositionBtn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				_posXFld.setText(String.valueOf(GraphFrameController.getInstance().getLastX()));
+				_posYFld.setText(String.valueOf(GraphFrameController.getInstance().getLastY()));
+
+			}
+		});
+
 	}
 
 }

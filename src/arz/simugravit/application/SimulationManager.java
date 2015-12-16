@@ -7,7 +7,7 @@ public class SimulationManager {
 	private double _pasSpatial;
 
 	private double _pasTemp;
-	
+
 	private double _maxX;
 
 	private double _maxY;
@@ -16,10 +16,9 @@ public class SimulationManager {
 
 		_pasSpatial = 100.0;
 		_pasTemp = 60.0;
-		
-		
-		setMaxX(10000000000.0);
-		setMaxY(10000000000.0);
+
+		_maxX = 10000000000.0;
+		_maxY = 10000000000.0;
 
 	}
 
@@ -55,7 +54,11 @@ public class SimulationManager {
 	}
 
 	public void setMaxY(double maxY) {
-		_maxY = maxY;
+
+		if (maxY > 0) {
+			_maxY = maxY;
+		}
+
 	}
 
 	public double getMaxX() {
@@ -63,12 +66,16 @@ public class SimulationManager {
 	}
 
 	public void setMaxX(double maxX) {
-		_maxX = maxX;
+
+		if (maxX > 0) {
+			_maxX = maxX;
+		}
+
 	}
 
 	public void stopAndClearSimu() {
 		// TODO RaZ de la simulation
-		
+
 	}
 
 }

@@ -1,70 +1,73 @@
 package arz.simugravit.presentation.controller;
 
-import java.awt.event.MouseListener;
-
 import arz.simugravit.application.SimulationManager;
 import arz.simugravit.presentation.frame.GraphFrame;
 
 public class GraphFrameController {
-	
-	
+
 	private static GraphFrameController _instance;
-	
-	
+
 	private GraphFrame _zeFrame;
-	
-	
-	private MouseListener _zeGraphML;
-	
-	
-	private GraphFrameController(){
-		
-		
-		//_zeGraphML = new 
-		
+
+	private GraphFrameController() {
+
 	}
-	
 
 	public static GraphFrameController getInstance() {
-		
-		
-		if(_instance ==null){
-			
+
+		if (_instance == null) {
+
 			_instance = new GraphFrameController();
-			
+
 		}
-		
+
 		return _instance;
 	}
 
-
 	public void openGraphFrame() {
-		
-		
-		
-		if(_zeFrame == null){
-			
-			
-			int width = (int) (SimulationManager.getInstance().getMaxX() / SimulationManager.getInstance().getPasSpatial());
-			int height = (int) (SimulationManager.getInstance().getMaxY() / SimulationManager.getInstance().getPasSpatial());
-			
-			_zeFrame = new GraphFrame(width, height);
-			_zeFrame.setVisible(true);
-			
-		}else{
-			
-			
+
+		if (_zeFrame != null) {
+
 			_zeFrame.dispose();
-			
-			int width = (int) (SimulationManager.getInstance().getMaxX() / SimulationManager.getInstance().getPasSpatial());
-			int height = (int) (SimulationManager.getInstance().getMaxY() / SimulationManager.getInstance().getPasSpatial());
-			
-			_zeFrame = new GraphFrame(width, height);
-			_zeFrame.setVisible(true);
-			
 		}
-		
-		
+
+		int width = (int) (SimulationManager.getInstance().getMaxX() / SimulationManager.getInstance().getPasSpatial());
+		int height = (int) (SimulationManager.getInstance().getMaxY() / SimulationManager.getInstance().getPasSpatial());
+
+		_zeFrame = new GraphFrame(width, height);
+		_zeFrame.setVisible(true);
+
+	}
+
+	/**
+	 * Retourne la derniere coordonnée en X (en mètre) à laquelle un clic a été
+	 * fait dans la fenetre de simulation
+	 * 
+	 * @return
+	 */
+	public double getLastX() {
+
+		if (_zeFrame == null) {
+			openGraphFrame();
+		}
+
+		return _zeFrame.getLastX() * SimulationManager.getInstance().getPasSpatial();
+
+	}
+
+	/**
+	 *  Retourne la derniere coordonnée en Y (en mètre) à laquelle un clic a été
+	 * fait dans la fenetre de simulation
+	 * @return
+	 */
+	public double getLastY() {
+
+		if (_zeFrame == null) {
+			openGraphFrame();
+		}
+
+		return _zeFrame.getLastY() * SimulationManager.getInstance().getPasSpatial();
+
 	}
 
 }

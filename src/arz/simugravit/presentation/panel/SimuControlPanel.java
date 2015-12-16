@@ -276,6 +276,22 @@ public class SimuControlPanel extends JPanel {
 
 				SimulationManager.getInstance().stopAndClearSimu();
 
+				try {
+					double maxX = Double.parseDouble(_largFld.getText());
+					SimulationManager.getInstance().setMaxX(maxX);
+				} catch (NumberFormatException ex) {
+					SimulationManager.getInstance().setMaxX(-1);
+					_largFld.setText(String.valueOf(SimulationManager.getInstance().getMaxX()));
+				}
+
+				try {
+					double maxY = Double.parseDouble(_hautFld.getText());
+					SimulationManager.getInstance().setMaxY(maxY);
+				} catch (NumberFormatException ex) {
+					SimulationManager.getInstance().setMaxY(-1);
+					_hautFld.setText(String.valueOf(SimulationManager.getInstance().getMaxY()));
+				}
+
 				GraphFrameController.getInstance().openGraphFrame();
 
 			}
