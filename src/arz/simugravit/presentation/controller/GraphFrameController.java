@@ -80,6 +80,8 @@ public class GraphFrameController {
 			_zeFrame = new GraphFrame(width, height);
 			_zeFrame.setVisible(true);
 		}
+		
+		_zeFrame.refreshGraphPanel();
 
 		
 		
@@ -89,6 +91,17 @@ public class GraphFrameController {
 	public void refreshGraphPanel() {
 		
 		_zeFrame.refreshGraphPanel();
+		
+	}
+
+	/**
+	 * Centre la zone graphique sur les coordonnées saisies.
+	 * @param xPixel
+	 * @param yPixel
+	 */
+	public void centerOn(int xPixel, int yPixel) {
+		
+		_zeFrame.centerOn(xPixel,yPixel);
 		
 	}
 

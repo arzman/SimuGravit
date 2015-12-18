@@ -21,9 +21,9 @@ public class CreateObjetPanel extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = -7821326404226866812L;
-	
+
 	private JButton _createButton;
-	
+
 	private ArrayList<ObjetPanel> _objPanelList;
 
 	public CreateObjetPanel() throws SimuApplicationException {
@@ -44,7 +44,7 @@ public class CreateObjetPanel extends JPanel {
 		add(groupPanel, gbc_scrollPane);
 
 		_objPanelList = new ArrayList<ObjetPanel>(ContextManager.getInstance().getNbrObject());
-		
+
 		for (int i = 0; i < ContextManager.getInstance().getNbrObject(); i++) {
 
 			GridBagConstraints cons = new GridBagConstraints();
@@ -68,38 +68,35 @@ public class CreateObjetPanel extends JPanel {
 		_createButton.setText("Create");
 
 		add(_createButton, cons);
-		
+
 		hookListener();
 
 	}
 
 	private void hookListener() {
-		
-		
+
 		_createButton.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				
-				try{
-				
-				for(ObjetPanel pan : _objPanelList){
-					
-					pan.writeObject();
-					
-				}
-				}catch(SimuApplicationException ex){
-					
+
+				try {
+
+					for (ObjetPanel pan : _objPanelList) {
+
+						pan.writeObject();
+
+					}
+				} catch (SimuApplicationException ex) {
+
 					JOptionPane.showMessageDialog(null, ex.getMessage(), "Impossible de créer les objets", JOptionPane.ERROR_MESSAGE);
-					
+
 				}
-				
-				
-				GraphFrameController.getInstance().openGraphFrame();
+
+				GraphFrameController.getInstance().openGraphFrameIfRequired();
 			}
 		});
-		
+
 	}
 
 }

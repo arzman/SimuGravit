@@ -14,6 +14,7 @@ import javax.swing.border.TitledBorder;
 
 import arz.simugravit.application.ContextManager;
 import arz.simugravit.application.exception.SimuApplicationException;
+import arz.simugravit.application.simulation.SimulationManager;
 import arz.simugravit.presentation.controller.GraphFrameController;
 
 import javax.swing.JButton;
@@ -272,7 +273,10 @@ public class ObjetPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				// TODO centrer sur l'objet
+				int xPixel = (int) (Double.parseDouble(_posXFld.getText()) / SimulationManager.getInstance().getPasSpatial());
+				int yPixel = (int) (Double.parseDouble(_posYFld.getText()) / SimulationManager.getInstance().getPasSpatial());
+
+				GraphFrameController.getInstance().centerOn(xPixel, yPixel);
 
 			}
 		});
