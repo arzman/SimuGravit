@@ -151,7 +151,6 @@ public class ObjetPanel extends JPanel {
 		gbc_intLbl.gridx = 0;
 		gbc_intLbl.gridy = 0;
 		vitesseGroup.add(intLbl, gbc_intLbl);
-		
 
 		_nrmVitFld = new JTextField();
 		_nrmVitFld.setColumns(10);
@@ -281,17 +280,13 @@ public class ObjetPanel extends JPanel {
 	}
 
 	public void writeObject() throws SimuApplicationException {
-		
-		
+
 		ContextManager.getInstance().updateObject(_num, ContextManager.IS_MOBILE, String.valueOf(_isMobilChck.isSelected()));
 		ContextManager.getInstance().updateObject(_num, ContextManager.POS_X, _posXFld.getText());
 		ContextManager.getInstance().updateObject(_num, ContextManager.POS_Y, _posYFld.getText());
 		ContextManager.getInstance().updateObject(_num, ContextManager.NORME_VIT, _nrmVitFld.getText());
 		ContextManager.getInstance().updateObject(_num, ContextManager.ORIEN_VIT, _anglVitFld.getText());
-		
-		
-	}
 
-	
+	}
 
 }
