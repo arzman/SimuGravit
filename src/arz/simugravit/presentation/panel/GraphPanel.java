@@ -6,8 +6,8 @@ import java.awt.Graphics;
 import javax.swing.JPanel;
 
 import arz.simugravit.application.ContextManager;
-import arz.simugravit.application.SimulationManager;
 import arz.simugravit.application.exception.SimuApplicationException;
+import arz.simugravit.application.simulation.SimulationManager;
 
 public class GraphPanel extends JPanel{
 
@@ -30,10 +30,6 @@ public class GraphPanel extends JPanel{
 		setPreferredSize(getSize());
 		setBackground(Color.BLACK);
 		
-		
-		
-		
-		
 	}
 	
 	@Override
@@ -52,8 +48,8 @@ public class GraphPanel extends JPanel{
 				//System.out.println("Draw "+i+" at "+SimulationManager.getInstance().getXfor(i)+" , "+SimulationManager.getInstance().getYfor(i));
 				g.fillOval(SimulationManager.getInstance().getXfor(i), SimulationManager.getInstance().getYfor(i), 10, 10);
 			} catch (SimuApplicationException e) {
-				// Allo Houston
-				e.printStackTrace();
+				// Allo Houston !!!
+				//TODO stopper la simu et logguer un machin
 			}
 			
 			

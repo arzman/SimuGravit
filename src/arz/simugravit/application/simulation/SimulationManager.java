@@ -1,6 +1,8 @@
-package arz.simugravit.application;
+package arz.simugravit.application.simulation;
 
+import arz.simugravit.application.ContextManager;
 import arz.simugravit.application.exception.SimuApplicationException;
+import arz.simugravit.presentation.controller.GraphFrameController;
 
 public class SimulationManager {
 
@@ -15,6 +17,8 @@ public class SimulationManager {
 	private double _maxY;
 
 	private double _g;
+	
+	private SimulationThread _thread;
 
 	private SimulationManager() {
 
@@ -25,6 +29,8 @@ public class SimulationManager {
 		_maxY = 10000000000.0;
 		
 		_g = 6.67384E-11;
+		
+		_thread = new SimulationThread();
 
 	}
 
@@ -101,6 +107,32 @@ public class SimulationManager {
 		int res = (int) (ContextManager.getInstance().getDoubleAttributeValue(i, ContextManager.POS_Y)/_pasSpatial);
 		
 		return res;
+	}
+
+	public void launchSimu() {
+		
+		GraphFrameController.getInstance().openGraphFrameIfRequired();
+		
+		_thread.start();
+		
+		
+	}
+
+	public void nextStep() throws SimuApplicationException {
+		
+		for(int i=0;i<ContextManager.getInstance().getNbrObject();i++){
+			
+			
+			double nextX = ContextManager.getInstance().getDoubleAttributeValue(i, ContextManager.POS_X) + 2;
+			double nextY = ContextManager.getInstance().getDoubleAttributeValue(i, ContextManager.POS_Y) +2;
+			
+			ContextManager.getInstance().updateDoubleObject(i, ContextManager.POS_X, nextX);
+			ContextManager.getInstance().updateDoubleObject(i, ContextManager.POS_Y, nextY);
+			
+			
+		}
+		
+		
 	}
 
 }

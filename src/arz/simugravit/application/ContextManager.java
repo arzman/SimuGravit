@@ -190,4 +190,47 @@ public class ContextManager {
 		}
 	}
 
+	public void updateDoubleObject(int num, int numField, double value) throws SimuApplicationException {
+		
+		
+		if (num >= NB_OBJECT) {
+
+			throw new SimuApplicationException("Le numéro du corps est invalide : " + num);
+		} else {
+
+			Corps c = _corpsList.get(num);
+
+			try {
+
+				switch (numField) {
+
+				case MASSE:
+					c.setMasse(value);
+					break;
+				case POS_X:
+					c.setPosX(value);
+					break;
+				case POS_Y:
+					c.setPosY(value);
+					break;
+				case NORME_VIT:
+					c.setNormVit(value);
+					break;
+				case ORIEN_VIT:
+					c.setOrienVit(value);
+					break;
+				default:
+					throw new SimuApplicationException("Champ invalide");
+
+				}
+
+			} catch (NumberFormatException ex) {
+
+				throw new SimuApplicationException("Impossible de mettre à jour l'objet", ex);
+
+			}
+		}
+		
+	}
+
 }

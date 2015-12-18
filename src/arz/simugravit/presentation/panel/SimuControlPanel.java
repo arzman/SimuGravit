@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import arz.simugravit.application.SimulationManager;
+import arz.simugravit.application.simulation.SimulationManager;
 import arz.simugravit.presentation.controller.GraphFrameController;
 
 import javax.swing.border.TitledBorder;
@@ -351,6 +351,17 @@ public class SimuControlPanel extends JPanel {
 
 				GraphFrameController.getInstance().openGraphFrame();
 
+			}
+		});
+		
+		
+		_goBtn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				SimulationManager.getInstance().launchSimu();
+				
 			}
 		});
 
