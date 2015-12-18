@@ -37,13 +37,14 @@ public class SimuControlPanel extends JPanel {
 	private JButton _goBtn;
 
 	private JButton _clearBtn;
+	private JTextField _gTxtFld;
 
 	public SimuControlPanel() {
 
 		GridBagLayout gbl__simuGroup = new GridBagLayout();
 		gbl__simuGroup.columnWidths = new int[] { 1, 0, 0 };
 		gbl__simuGroup.rowHeights = new int[] { 1, 0, 0, 0 };
-		gbl__simuGroup.columnWeights = new double[] { 0.0, 0.0, Double.MIN_VALUE };
+		gbl__simuGroup.columnWeights = new double[] { 1.0, 1.0, Double.MIN_VALUE };
 		gbl__simuGroup.rowWeights = new double[] { 0.0, 0.0, 1.0, Double.MIN_VALUE };
 		setLayout(gbl__simuGroup);
 
@@ -86,7 +87,8 @@ public class SimuControlPanel extends JPanel {
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Pas de simulation", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GridBagConstraints gbc_panel = new GridBagConstraints();
-		gbc_panel.fill = GridBagConstraints.BOTH;
+		gbc_panel.insets = new Insets(0, 0, 5, 5);
+		gbc_panel.fill = GridBagConstraints.HORIZONTAL;
 		gbc_panel.gridx = 0;
 		gbc_panel.gridy = 1;
 		add(panel, gbc_panel);
@@ -99,7 +101,7 @@ public class SimuControlPanel extends JPanel {
 
 		JPanel _spatialResPanel = new JPanel();
 		GridBagConstraints gbc__spatialResPanel = new GridBagConstraints();
-		gbc__spatialResPanel.fill = GridBagConstraints.BOTH;
+		gbc__spatialResPanel.fill = GridBagConstraints.HORIZONTAL;
 		gbc__spatialResPanel.insets = new Insets(0, 0, 5, 0);
 		gbc__spatialResPanel.gridx = 0;
 		gbc__spatialResPanel.gridy = 0;
@@ -107,7 +109,7 @@ public class SimuControlPanel extends JPanel {
 		GridBagLayout gbl__spatialResPanel = new GridBagLayout();
 		gbl__spatialResPanel.columnWidths = new int[] { 0, 0, 0 };
 		gbl__spatialResPanel.rowHeights = new int[] { 0 };
-		gbl__spatialResPanel.columnWeights = new double[] { 0.0, 0.0, 0.0 };
+		gbl__spatialResPanel.columnWeights = new double[] { 0.0, 1.0, 0.0 };
 		gbl__spatialResPanel.rowWeights = new double[] { 0.0 };
 		_spatialResPanel.setLayout(gbl__spatialResPanel);
 
@@ -143,7 +145,7 @@ public class SimuControlPanel extends JPanel {
 		GridBagLayout gbl__tempResPanel = new GridBagLayout();
 		gbl__tempResPanel.columnWidths = new int[] { 0, 0, 0 };
 		gbl__tempResPanel.rowHeights = new int[] { 0 };
-		gbl__tempResPanel.columnWeights = new double[] { 0.0, 0.0, 0.0 };
+		gbl__tempResPanel.columnWeights = new double[] { 0.0, 1.0, 0.0 };
 		gbl__tempResPanel.rowWeights = new double[] { 0.0 };
 		_tempResPanel.setLayout(gbl__tempResPanel);
 
@@ -176,7 +178,8 @@ public class SimuControlPanel extends JPanel {
 		panel_1.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Taille de simulation", TitledBorder.LEADING, TitledBorder.TOP, null,
 				new Color(0, 0, 0)));
 		GridBagConstraints gbc_panel_1 = new GridBagConstraints();
-		gbc_panel_1.fill = GridBagConstraints.BOTH;
+		gbc_panel_1.insets = new Insets(0, 0, 5, 0);
+		gbc_panel_1.fill = GridBagConstraints.HORIZONTAL;
 		gbc_panel_1.gridx = 1;
 		gbc_panel_1.gridy = 1;
 		add(panel_1, gbc_panel_1);
@@ -262,6 +265,60 @@ public class SimuControlPanel extends JPanel {
 		gbc_lblMtres.gridx = 2;
 		gbc_lblMtres.gridy = 0;
 		panel_3.add(lblMtres, gbc_lblMtres);
+		
+		JPanel panel_4 = new JPanel();
+		panel_4.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Phyisque", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		GridBagConstraints gbc_panel_4 = new GridBagConstraints();
+		gbc_panel_4.gridwidth = 2;
+		gbc_panel_4.insets = new Insets(0, 0, 0, 5);
+		gbc_panel_4.fill = GridBagConstraints.BOTH;
+		gbc_panel_4.gridx = 0;
+		gbc_panel_4.gridy = 2;
+		add(panel_4, gbc_panel_4);
+		GridBagLayout gbl_panel_4 = new GridBagLayout();
+		gbl_panel_4.columnWidths = new int[]{1, 0};
+		gbl_panel_4.rowHeights = new int[]{0, 0, 0};
+		gbl_panel_4.columnWeights = new double[]{0.0, Double.MIN_VALUE};
+		gbl_panel_4.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		panel_4.setLayout(gbl_panel_4);
+		
+		JPanel panel_5 = new JPanel();
+		GridBagConstraints gbc_panel_5 = new GridBagConstraints();
+		gbc_panel_5.fill = GridBagConstraints.HORIZONTAL;
+		gbc_panel_5.insets = new Insets(0, 0, 5, 0);
+		gbc_panel_5.gridx = 0;
+		gbc_panel_5.gridy = 0;
+		panel_4.add(panel_5, gbc_panel_5);
+		GridBagLayout gbl_panel_5 = new GridBagLayout();
+		gbl_panel_5.columnWidths = new int[]{0, 0, 0, 0};
+		gbl_panel_5.rowHeights = new int[]{0, 0};
+		gbl_panel_5.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel_5.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		panel_5.setLayout(gbl_panel_5);
+		
+		JLabel lblG = new JLabel("G :");
+		GridBagConstraints gbc_lblG = new GridBagConstraints();
+		gbc_lblG.fill = GridBagConstraints.HORIZONTAL;
+		gbc_lblG.insets = new Insets(0, 0, 0, 5);
+		gbc_lblG.gridx = 0;
+		gbc_lblG.gridy = 0;
+		panel_5.add(lblG, gbc_lblG);
+		
+		_gTxtFld = new JTextField();
+		_gTxtFld.setText(String.valueOf(SimulationManager.getInstance().getG()));
+		_gTxtFld.setColumns(10);
+		GridBagConstraints gbc_textField = new GridBagConstraints();
+		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_textField.insets = new Insets(0, 2, 0, 5);
+		gbc_textField.gridx = 1;
+		gbc_textField.gridy = 0;
+		panel_5.add(_gTxtFld, gbc_textField);
+		
+		JLabel lblSi = new JLabel("S.I");
+		GridBagConstraints gbc_lblSi = new GridBagConstraints();
+		gbc_lblSi.gridx = 2;
+		gbc_lblSi.gridy = 0;
+		panel_5.add(lblSi, gbc_lblSi);
 
 		hookListeners();
 

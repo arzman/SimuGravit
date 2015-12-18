@@ -1,5 +1,7 @@
 package arz.simugravit.application;
 
+import arz.simugravit.application.exception.SimuApplicationException;
+
 public class SimulationManager {
 
 	private static SimulationManager _instance;
@@ -12,6 +14,8 @@ public class SimulationManager {
 
 	private double _maxY;
 
+	private double _g;
+
 	private SimulationManager() {
 
 		_pasSpatial = 100.0;
@@ -19,6 +23,8 @@ public class SimulationManager {
 
 		_maxX = 10000000000.0;
 		_maxY = 10000000000.0;
+		
+		_g = 6.67384E-11;
 
 	}
 
@@ -76,6 +82,25 @@ public class SimulationManager {
 	public void stopAndClearSimu() {
 		// TODO RaZ de la simulation
 
+	}
+
+	public double getG() {
+		
+		return _g;
+	}
+
+	public int getXfor(int i) throws SimuApplicationException {
+		
+		int res = (int) (ContextManager.getInstance().getDoubleAttributeValue(i, ContextManager.POS_X)/_pasSpatial);
+		
+		return res;
+	}
+	
+	public int getYfor(int i) throws SimuApplicationException {
+		
+		int res = (int) (ContextManager.getInstance().getDoubleAttributeValue(i, ContextManager.POS_Y)/_pasSpatial);
+		
+		return res;
 	}
 
 }

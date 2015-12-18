@@ -5,6 +5,10 @@ import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
+import arz.simugravit.application.ContextManager;
+import arz.simugravit.application.SimulationManager;
+import arz.simugravit.application.exception.SimuApplicationException;
+
 public class GraphPanel extends JPanel{
 
 	
@@ -39,13 +43,21 @@ public class GraphPanel extends JPanel{
 		
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, _width, _height);
+
 		
 		g.setColor(Color.RED);
-		g.fillOval(50, 50, 10, 10);
-		
-		
-		g.setColor(Color.RED);
-		g.fillOval(500, 500, 10, 10);
+		for(int i=0;i<ContextManager.getInstance().getNbrObject();i++){
+					
+			try {
+				//System.out.println("Draw "+i+" at "+SimulationManager.getInstance().getXfor(i)+" , "+SimulationManager.getInstance().getYfor(i));
+				g.fillOval(SimulationManager.getInstance().getXfor(i), SimulationManager.getInstance().getYfor(i), 10, 10);
+			} catch (SimuApplicationException e) {
+				// Allo Houston
+				e.printStackTrace();
+			}
+			
+			
+		}
 		
 		
 	}

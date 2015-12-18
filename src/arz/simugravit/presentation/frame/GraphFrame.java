@@ -39,6 +39,8 @@ public class GraphFrame extends JFrame {
 		gbc.weighty = 1.0;
 
 		getContentPane().add(scroll, gbc);
+		
+		setSize(width+10, height+10);
 
 		_zeGraphML = new GraphMouseListener(_graphPanel);
 	}
