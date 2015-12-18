@@ -17,7 +17,7 @@ public class SimulationManager {
 	private double _maxY;
 
 	private double _g;
-	
+
 	private SimulationThread _thread;
 
 	private SimulationManager() {
@@ -27,9 +27,9 @@ public class SimulationManager {
 
 		_maxX = 10000000000.0;
 		_maxY = 10000000000.0;
-		
+
 		_g = 6.67384E-11;
-		
+
 		_thread = new SimulationThread();
 
 	}
@@ -91,47 +91,59 @@ public class SimulationManager {
 	}
 
 	public double getG() {
-		
+
 		return _g;
 	}
 
 	public int getXfor(int i) throws SimuApplicationException {
-		
-		int res = (int) (ContextManager.getInstance().getDoubleAttributeValue(i, ContextManager.POS_X)/_pasSpatial);
-		
+
+		int res = (int) (ContextManager.getInstance().getDoubleAttributeValue(i, ContextManager.POS_X) / _pasSpatial);
+
 		return res;
 	}
-	
+
 	public int getYfor(int i) throws SimuApplicationException {
-		
-		int res = (int) (ContextManager.getInstance().getDoubleAttributeValue(i, ContextManager.POS_Y)/_pasSpatial);
-		
+
+		int res = (int) (ContextManager.getInstance().getDoubleAttributeValue(i, ContextManager.POS_Y) / _pasSpatial);
+
 		return res;
 	}
 
 	public void launchSimu() {
-		
+
 		GraphFrameController.getInstance().openGraphFrameIfRequired();
 		
-		_thread.start();
-		
-		
+		if(_thread==null){
+			_thread = new SimulationThread();
+		}
+
+		if (!_thread.isAlive()) {
+
+			_thread.start();
+		}
+
 	}
 
 	public void nextStep() throws SimuApplicationException {
-		
-		for(int i=0;i<ContextManager.getInstance().getNbrObject();i++){
-			
-			
-			double nextX = ContextManager.getInstance().getDoubleAttributeValue(i, ContextManager.POS_X) + 2;
-			double nextY = ContextManager.getInstance().getDoubleAttributeValue(i, ContextManager.POS_Y) +2;
-			
+
+		for (int i = 0; i < ContextManager.getInstance().getNbrObject(); i++) {
+
+			double nextX = ContextManager.getInstance().getDoubleAttributeValue(i, ContextManager.POS_X) + 200;
+			double nextY = ContextManager.getInstance().getDoubleAttributeValue(i, ContextManager.POS_Y) + 200;
+
 			ContextManager.getInstance().updateDoubleObject(i, ContextManager.POS_X, nextX);
 			ContextManager.getInstance().updateDoubleObject(i, ContextManager.POS_Y, nextY);
 			
-			
+			//System.out.println("corps "+i+" new pos "+nextX+" , "+nextY);
+
 		}
+
+	}
+
+	public void stopSimu() {
 		
+		_thread.pleaseStop();
+		_thread = null;
 		
 	}
 

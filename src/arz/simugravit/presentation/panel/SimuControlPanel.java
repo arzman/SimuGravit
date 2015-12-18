@@ -39,6 +39,8 @@ public class SimuControlPanel extends JPanel {
 	private JButton _clearBtn;
 	private JTextField _gTxtFld;
 
+	private JButton _stopBtn;
+
 	public SimuControlPanel() {
 
 		GridBagLayout gbl__simuGroup = new GridBagLayout();
@@ -70,7 +72,7 @@ public class SimuControlPanel extends JPanel {
 		gbc__goBtn.gridy = 0;
 		_buttonPanel.add(_goBtn, gbc__goBtn);
 
-		JButton _stopBtn = new JButton("Stop");
+		_stopBtn = new JButton("Stop");
 		GridBagConstraints gbc__stopBtn = new GridBagConstraints();
 		gbc__stopBtn.fill = GridBagConstraints.BOTH;
 		gbc__stopBtn.gridx = 2;
@@ -265,9 +267,10 @@ public class SimuControlPanel extends JPanel {
 		gbc_lblMtres.gridx = 2;
 		gbc_lblMtres.gridy = 0;
 		panel_3.add(lblMtres, gbc_lblMtres);
-		
+
 		JPanel panel_4 = new JPanel();
-		panel_4.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Phyisque", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel_4.setBorder(
+				new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Phyisque", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		GridBagConstraints gbc_panel_4 = new GridBagConstraints();
 		gbc_panel_4.gridwidth = 2;
 		gbc_panel_4.insets = new Insets(0, 0, 0, 5);
@@ -276,12 +279,12 @@ public class SimuControlPanel extends JPanel {
 		gbc_panel_4.gridy = 2;
 		add(panel_4, gbc_panel_4);
 		GridBagLayout gbl_panel_4 = new GridBagLayout();
-		gbl_panel_4.columnWidths = new int[]{1, 0};
-		gbl_panel_4.rowHeights = new int[]{0, 0, 0};
-		gbl_panel_4.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-		gbl_panel_4.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		gbl_panel_4.columnWidths = new int[] { 1, 0 };
+		gbl_panel_4.rowHeights = new int[] { 0, 0, 0 };
+		gbl_panel_4.columnWeights = new double[] { 0.0, Double.MIN_VALUE };
+		gbl_panel_4.rowWeights = new double[] { 0.0, 0.0, Double.MIN_VALUE };
 		panel_4.setLayout(gbl_panel_4);
-		
+
 		JPanel panel_5 = new JPanel();
 		GridBagConstraints gbc_panel_5 = new GridBagConstraints();
 		gbc_panel_5.fill = GridBagConstraints.HORIZONTAL;
@@ -290,12 +293,12 @@ public class SimuControlPanel extends JPanel {
 		gbc_panel_5.gridy = 0;
 		panel_4.add(panel_5, gbc_panel_5);
 		GridBagLayout gbl_panel_5 = new GridBagLayout();
-		gbl_panel_5.columnWidths = new int[]{0, 0, 0, 0};
-		gbl_panel_5.rowHeights = new int[]{0, 0};
-		gbl_panel_5.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_panel_5.rowWeights = new double[]{0.0, Double.MIN_VALUE};
+		gbl_panel_5.columnWidths = new int[] { 0, 0, 0, 0 };
+		gbl_panel_5.rowHeights = new int[] { 0, 0 };
+		gbl_panel_5.columnWeights = new double[] { 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		gbl_panel_5.rowWeights = new double[] { 0.0, Double.MIN_VALUE };
 		panel_5.setLayout(gbl_panel_5);
-		
+
 		JLabel lblG = new JLabel("G :");
 		GridBagConstraints gbc_lblG = new GridBagConstraints();
 		gbc_lblG.fill = GridBagConstraints.HORIZONTAL;
@@ -303,7 +306,7 @@ public class SimuControlPanel extends JPanel {
 		gbc_lblG.gridx = 0;
 		gbc_lblG.gridy = 0;
 		panel_5.add(lblG, gbc_lblG);
-		
+
 		_gTxtFld = new JTextField();
 		_gTxtFld.setText(String.valueOf(SimulationManager.getInstance().getG()));
 		_gTxtFld.setColumns(10);
@@ -313,7 +316,7 @@ public class SimuControlPanel extends JPanel {
 		gbc_textField.gridx = 1;
 		gbc_textField.gridy = 0;
 		panel_5.add(_gTxtFld, gbc_textField);
-		
+
 		JLabel lblSi = new JLabel("S.I");
 		GridBagConstraints gbc_lblSi = new GridBagConstraints();
 		gbc_lblSi.gridx = 2;
@@ -353,15 +356,24 @@ public class SimuControlPanel extends JPanel {
 
 			}
 		});
-		
-		
+
 		_goBtn.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+
 				SimulationManager.getInstance().launchSimu();
-				
+
+			}
+		});
+
+		_stopBtn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				SimulationManager.getInstance().stopSimu();
+
 			}
 		});
 
