@@ -2,9 +2,11 @@ package arz.simugravit.presentation.frame;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
 
 import arz.simugravit.presentation.listener.GraphMouseListener;
 import arz.simugravit.presentation.panel.GraphPanel;
@@ -39,6 +41,8 @@ public class GraphFrame extends JFrame {
 		gbc.weighty = 1.0;
 
 		getContentPane().add(scroll, gbc);
+		
+		setSize(width+10, height+10);
 
 		_zeGraphML = new GraphMouseListener(_graphPanel);
 	}
@@ -80,5 +84,28 @@ public class GraphFrame extends JFrame {
 		}
 
 		return res;
+	}
+
+	public void refreshGraphPanel() {
+		
+		
+		try {
+			SwingUtilities.invokeAndWait(new Runnable() {
+				
+				@Override
+				public void run() {
+					_graphPanel.repaint();
+					
+				}
+			});
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 	}
 }

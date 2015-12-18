@@ -12,6 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
+import arz.simugravit.application.ContextManager;
+import arz.simugravit.application.exception.SimuApplicationException;
 import arz.simugravit.presentation.controller.GraphFrameController;
 
 import javax.swing.JButton;
@@ -29,8 +31,10 @@ public class ObjetPanel extends JPanel {
 
 	private final int _num;
 	private JButton _setPositionBtn;
+	private JCheckBox _isMobilChck;
+	private JButton _centerBtn;
 
-	public ObjetPanel(int num) {
+	public ObjetPanel(int num) throws SimuApplicationException {
 
 		_num = num;
 
@@ -68,6 +72,7 @@ public class ObjetPanel extends JPanel {
 		gbc_posXFld.gridy = 0;
 		positionGroup.add(_posXFld, gbc_posXFld);
 		_posXFld.setColumns(10);
+		_posXFld.setText(String.valueOf(ContextManager.getInstance().getDoubleAttributeValue(_num, ContextManager.POS_X)));
 
 		JLabel xunitLbl = new JLabel("m\u00E8tre(s)");
 		GridBagConstraints gbc_xunitLbl = new GridBagConstraints();
@@ -92,6 +97,7 @@ public class ObjetPanel extends JPanel {
 		gbc_posYFld.gridx = 1;
 		gbc_posYFld.gridy = 1;
 		positionGroup.add(_posYFld, gbc_posYFld);
+		_posYFld.setText(String.valueOf(ContextManager.getInstance().getDoubleAttributeValue(_num, ContextManager.POS_Y)));
 
 		JLabel xUnitLbl = new JLabel("m\u00E8tre(s)");
 		GridBagConstraints gbc_xUnitLbl = new GridBagConstraints();
@@ -145,6 +151,7 @@ public class ObjetPanel extends JPanel {
 		gbc_intLbl.gridx = 0;
 		gbc_intLbl.gridy = 0;
 		vitesseGroup.add(intLbl, gbc_intLbl);
+		
 
 		_nrmVitFld = new JTextField();
 		_nrmVitFld.setColumns(10);
@@ -154,6 +161,7 @@ public class ObjetPanel extends JPanel {
 		gbc_nrmVitFld.gridx = 1;
 		gbc_nrmVitFld.gridy = 0;
 		vitesseGroup.add(_nrmVitFld, gbc_nrmVitFld);
+		_nrmVitFld.setText(String.valueOf(ContextManager.getInstance().getDoubleAttributeValue(_num, ContextManager.NORME_VIT)));
 
 		JLabel nrmVitUnitLbl = new JLabel("m/s");
 		GridBagConstraints gbc_nrmVitUnitLbl = new GridBagConstraints();
@@ -179,6 +187,7 @@ public class ObjetPanel extends JPanel {
 		gbc_anglVitFld.gridx = 1;
 		gbc_anglVitFld.gridy = 1;
 		vitesseGroup.add(_anglVitFld, gbc_anglVitFld);
+		_anglVitFld.setText(String.valueOf(ContextManager.getInstance().getDoubleAttributeValue(_num, ContextManager.ORIEN_VIT)));
 
 		JLabel anglVitUnitLbl = new JLabel("degr\u00E9s");
 		GridBagConstraints gbc_anglVitUnitLbl = new GridBagConstraints();
@@ -225,6 +234,7 @@ public class ObjetPanel extends JPanel {
 		gbc_massFld.gridy = 0;
 		panel.add(_massFld, gbc_massFld);
 		_massFld.setColumns(10);
+		_massFld.setText(String.valueOf(ContextManager.getInstance().getDoubleAttributeValue(_num, ContextManager.MASSE)));
 
 		JLabel massUnitLbl = new JLabel("Kg");
 		GridBagConstraints gbc_massUnitLbl = new GridBagConstraints();
@@ -232,17 +242,21 @@ public class ObjetPanel extends JPanel {
 		gbc_massUnitLbl.gridy = 0;
 		panel.add(massUnitLbl, gbc_massUnitLbl);
 
-		JCheckBox _isMobilChck = new JCheckBox("est mobile");
+		_isMobilChck = new JCheckBox("est mobile");
 		GridBagConstraints gbc__isMobilChck = new GridBagConstraints();
 		gbc__isMobilChck.gridx = 1;
 		gbc__isMobilChck.gridy = 0;
 		propGroup.add(_isMobilChck, gbc__isMobilChck);
-
+		_isMobilChck.setSelected(ContextManager.getInstance().getBooleanAttributeValue(_num, ContextManager.IS_MOBILE));
 		hookListener();
 	}
 
+	/**
+	 * Mise en place des actions sur les boutons
+	 */
 	private void hookListener() {
 
+		// import de la position dans les champs
 		_setPositionBtn.addActionListener(new ActionListener() {
 
 			@Override
@@ -254,6 +268,30 @@ public class ObjetPanel extends JPanel {
 			}
 		});
 
+		_centerBtn.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+
+				// TODO centrer sur l'objet
+
+			}
+		});
+
 	}
+
+	public void writeObject() throws SimuApplicationException {
+		
+		
+		ContextManager.getInstance().updateObject(_num, ContextManager.IS_MOBILE, String.valueOf(_isMobilChck.isSelected()));
+		ContextManager.getInstance().updateObject(_num, ContextManager.POS_X, _posXFld.getText());
+		ContextManager.getInstance().updateObject(_num, ContextManager.POS_Y, _posYFld.getText());
+		ContextManager.getInstance().updateObject(_num, ContextManager.NORME_VIT, _nrmVitFld.getText());
+		ContextManager.getInstance().updateObject(_num, ContextManager.ORIEN_VIT, _anglVitFld.getText());
+		
+		
+	}
+
+	
 
 }

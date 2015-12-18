@@ -6,10 +6,12 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
+import arz.simugravit.application.exception.SimuApplicationException;
 import arz.simugravit.presentation.panel.CreateObjetPanel;
 import arz.simugravit.presentation.panel.SimuControlPanel;
 
@@ -72,12 +74,20 @@ public class SimuGravitFrame extends JFrame {
 		gbl_panel_1.rowWeights = new double[] { 1.0, Double.MIN_VALUE };
 		panel_1.setLayout(gbl_panel_1);
 
-		CreateObjetPanel createObjetPanel = new CreateObjetPanel();
+		CreateObjetPanel createObjetPanel;
+		try {
+			createObjetPanel = new CreateObjetPanel();
+		
 		GridBagConstraints gbc_createObjetPanel = new GridBagConstraints();
 		gbc_createObjetPanel.fill = GridBagConstraints.BOTH;
 		gbc_createObjetPanel.gridx = 0;
 		gbc_createObjetPanel.gridy = 0;
 		panel_1.add(createObjetPanel, gbc_createObjetPanel);
+		} catch (SimuApplicationException e) {
+			
+			JOptionPane.showMessageDialog(null, e.getMessage(), "Impossible de créer la fenêtre", JOptionPane.ERROR_MESSAGE);
+			
+		}
 
 		pack();
 

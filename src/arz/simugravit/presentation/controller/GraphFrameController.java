@@ -1,6 +1,6 @@
 package arz.simugravit.presentation.controller;
 
-import arz.simugravit.application.SimulationManager;
+import arz.simugravit.application.simulation.SimulationManager;
 import arz.simugravit.presentation.frame.GraphFrame;
 
 public class GraphFrameController {
@@ -68,6 +68,28 @@ public class GraphFrameController {
 
 		return _zeFrame.getLastY() * SimulationManager.getInstance().getPasSpatial();
 
+	}
+
+	public void openGraphFrameIfRequired() {
+		
+		if (_zeFrame == null) {
+
+			int width = (int) (SimulationManager.getInstance().getMaxX() / SimulationManager.getInstance().getPasSpatial());
+			int height = (int) (SimulationManager.getInstance().getMaxY() / SimulationManager.getInstance().getPasSpatial());
+
+			_zeFrame = new GraphFrame(width, height);
+			_zeFrame.setVisible(true);
+		}
+
+		
+		
+		
+	}
+
+	public void refreshGraphPanel() {
+		
+		_zeFrame.refreshGraphPanel();
+		
 	}
 
 }
