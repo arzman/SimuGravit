@@ -7,6 +7,8 @@ package arz.simugravit.model;
 public class Corps {
 	
 	
+	//TODO passer Vitesse en cartésion
+	
 	
 	private double _masse;
 	

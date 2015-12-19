@@ -20,6 +20,8 @@ public class GraphPanel extends JPanel{
 	private int _width;
 	
 	private int _height;
+	
+	private final double deg_to_rad = Math.PI/180;
 
 	public GraphPanel(int width, int height) {
 		
@@ -29,6 +31,7 @@ public class GraphPanel extends JPanel{
 		setSize(_width, _height);
 		setPreferredSize(getSize());
 		setBackground(Color.BLACK);
+
 		
 	}
 	
@@ -46,7 +49,16 @@ public class GraphPanel extends JPanel{
 					
 			try {
 				//System.out.println("Draw "+i+" at "+SimulationManager.getInstance().getXfor(i)+" , "+SimulationManager.getInstance().getYfor(i));
-				g.fillOval(SimulationManager.getInstance().getXfor(i), SimulationManager.getInstance().getYfor(i), 10, 10);
+				int x=SimulationManager.getInstance().getXfor(i);
+				int y=SimulationManager.getInstance().getYfor(i);
+				
+				double ang = ContextManager.getInstance().getDoubleAttributeValue(i, ContextManager.ORIEN_VIT);
+				
+				int dx=(int) (20*Math.cos(ang*deg_to_rad));
+				int dy=(int) (20*Math.sin(ang*deg_to_rad));
+				
+				g.fillOval(x-5, y-5, 10, 10);
+				g.drawLine(x, y, x+dx, y-dy);
 			} catch (SimuApplicationException e) {
 				// Allo Houston !!!
 				//TODO stopper la simu et logguer un machin

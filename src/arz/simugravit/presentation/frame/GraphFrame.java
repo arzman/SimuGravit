@@ -1,6 +1,5 @@
 package arz.simugravit.presentation.frame;
 
-import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -127,7 +126,7 @@ public class GraphFrame extends JFrame {
 	public void centerOn(int xPixel, int yPixel) {
 
 		Rectangle size = _scroll.getViewport().getViewRect();
-		_scroll.getViewport().setViewPosition(new Point((int) ( xPixel- size.getWidth() / 2), (int) (yPixel - size.getHeight() / 2)));
+		_scroll.getViewport().setViewPosition(new Point((int) (xPixel - size.getWidth() / 2), (int) (yPixel - size.getHeight() / 2)));
 
 	}
 }

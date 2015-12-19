@@ -18,6 +18,8 @@ public class SimulationManager {
 
 	private double _g;
 
+	private final double deg_to_rad = Math.PI / 180;
+
 	private SimulationThread _thread;
 
 	private SimulationManager() {
@@ -112,8 +114,8 @@ public class SimulationManager {
 	public void launchSimu() {
 
 		GraphFrameController.getInstance().openGraphFrameIfRequired();
-		
-		if(_thread==null){
+
+		if (_thread == null) {
 			_thread = new SimulationThread();
 		}
 
@@ -128,23 +130,32 @@ public class SimulationManager {
 
 		for (int i = 0; i < ContextManager.getInstance().getNbrObject(); i++) {
 
-			double nextX = ContextManager.getInstance().getDoubleAttributeValue(i, ContextManager.POS_X) + 200;
-			double nextY = ContextManager.getInstance().getDoubleAttributeValue(i, ContextManager.POS_Y) + 200;
+			if (ContextManager.getInstance().getBooleanAttributeValue(i, ContextManager.IS_MOBILE)) {
 
-			ContextManager.getInstance().updateDoubleObject(i, ContextManager.POS_X, nextX);
-			ContextManager.getInstance().updateDoubleObject(i, ContextManager.POS_Y, nextY);
-			
-			//System.out.println("corps "+i+" new pos "+nextX+" , "+nextY);
+				double norm = ContextManager.getInstance().getDoubleAttributeValue(i, ContextManager.NORME_VIT);
+				double ang = ContextManager.getInstance().getDoubleAttributeValue(i, ContextManager.ORIEN_VIT);
+
+				double nextX = ContextManager.getInstance().getDoubleAttributeValue(i, ContextManager.POS_X) + norm * Math.cos(ang * deg_to_rad);
+				double nextY = ContextManager.getInstance().getDoubleAttributeValue(i, ContextManager.POS_Y) - norm * Math.sin(ang * deg_to_rad);
+
+				ContextManager.getInstance().updateDoubleObject(i, ContextManager.POS_X, nextX);
+				ContextManager.getInstance().updateDoubleObject(i, ContextManager.POS_Y, nextY);
+
+				// System.out.println("corps "+i+" new pos "+nextX+" , "+nextY);
+			}
 
 		}
 
 	}
 
 	public void stopSimu() {
-		
-		_thread.pleaseStop();
-		_thread = null;
-		
+
+		if (_thread != null) {
+
+			_thread.pleaseStop();
+			_thread = null;
+		}
+
 	}
 
 }
