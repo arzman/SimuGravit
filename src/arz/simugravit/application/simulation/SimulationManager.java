@@ -18,8 +18,6 @@ public class SimulationManager {
 
 	private double _g;
 
-	private final double deg_to_rad = Math.PI / 180;
-
 	private SimulationThread _thread;
 
 	private SimulationManager() {
@@ -27,8 +25,8 @@ public class SimulationManager {
 		_pasSpatial = 100.0;
 		_pasTemp = 60.0;
 
-		_maxX = 10000000000.0;
-		_maxY = 10000000000.0;
+		_maxX = 10000000.0;
+		_maxY = 10000000.0;
 
 		_g = 6.67384E-11;
 
@@ -128,20 +126,87 @@ public class SimulationManager {
 
 	public void nextStep() throws SimuApplicationException {
 
+		double[][] tmpArray = new double[3][6];
+
 		for (int i = 0; i < ContextManager.getInstance().getNbrObject(); i++) {
 
 			if (ContextManager.getInstance().getBooleanAttributeValue(i, ContextManager.IS_MOBILE)) {
 
-				double norm = ContextManager.getInstance().getDoubleAttributeValue(i, ContextManager.NORME_VIT);
-				double ang = ContextManager.getInstance().getDoubleAttributeValue(i, ContextManager.ORIEN_VIT);
+				// position de l'objet i
+				double Xi = ContextManager.getInstance().getDoubleAttributeValue(i, ContextManager.POS_X);
+				double Yi = ContextManager.getInstance().getDoubleAttributeValue(i, ContextManager.POS_Y);
 
-				double nextX = ContextManager.getInstance().getDoubleAttributeValue(i, ContextManager.POS_X) + norm * Math.cos(ang * deg_to_rad);
-				double nextY = ContextManager.getInstance().getDoubleAttributeValue(i, ContextManager.POS_Y) - norm * Math.sin(ang * deg_to_rad);
+				// calcul de la variation de l'accélération
+				double axi = 0.0;
+				double ayi = 0.0;
 
-				ContextManager.getInstance().updateDoubleObject(i, ContextManager.POS_X, nextX);
-				ContextManager.getInstance().updateDoubleObject(i, ContextManager.POS_Y, nextY);
+				for (int j = 0; j < ContextManager.getInstance().getNbrObject(); j++) {
 
-				// System.out.println("corps "+i+" new pos "+nextX+" , "+nextY);
+					if (j != i) {
+
+						// récupération de la position de l'objet j
+						double Xj = ContextManager.getInstance().getDoubleAttributeValue(j, ContextManager.POS_X);
+						double Yj = ContextManager.getInstance().getDoubleAttributeValue(j, ContextManager.POS_Y);
+
+						// norme de la force
+						double dist = Math.sqrt((Xj - Xi) * (Xj - Xi) + (Yj - Yi) * (Yj - Yi));
+						double mj = _g * ContextManager.getInstance().getDoubleAttributeValue(j, ContextManager.MASSE);
+						double normF = mj / (dist * dist);
+
+						// projection de la force sur les axes
+						double daxi = ((Xj - Xi) / dist) * normF;
+						double dayi = ((Yj - Yi) / dist) * normF;
+
+						// System.out.println(" Force "+j+" : "+daxi+" ,
+						// "+dayi);
+
+						// variation de l'accélération
+						axi = axi + daxi;
+						ayi = ayi - dayi;
+
+					}
+
+				}
+				// System.out.println(" accélération "+axi+" , "+ayi);
+
+				// récupération et variation de la vitesse
+				double vx = ContextManager.getInstance().getDoubleAttributeValue(i, ContextManager.VIT_X) + axi * _pasTemp;
+				double vy = ContextManager.getInstance().getDoubleAttributeValue(i, ContextManager.VIT_Y) + ayi * _pasTemp;
+				// System.out.println(" vitesse "+vx+" , "+vy);
+
+				// récupération et variation de la position
+				double nextX = Xi + vx * _pasTemp;
+				double nextY = Yi - vy * _pasTemp;
+				// System.out.println("position " +nextX+" , "+nextY);
+
+				// mise en cache des nouvelles valeurs
+				tmpArray[i][0] = nextX;
+				tmpArray[i][1] = nextY;
+
+				tmpArray[i][2] = vx;
+				tmpArray[i][3] = vy;
+
+				tmpArray[i][4] = axi;
+				tmpArray[i][5] = ayi;
+
+			}
+
+		}
+
+		// maj des positions
+		for (int i = 0; i < ContextManager.getInstance().getNbrObject(); i++) {
+
+			if (ContextManager.getInstance().getBooleanAttributeValue(i, ContextManager.IS_MOBILE)) {
+				if (tmpArray[i] != null) {
+
+					ContextManager.getInstance().updateDoubleObject(i, ContextManager.POS_X, tmpArray[i][0]);
+					ContextManager.getInstance().updateDoubleObject(i, ContextManager.POS_Y, tmpArray[i][1]);
+					ContextManager.getInstance().updateDoubleObject(i, ContextManager.VIT_X, tmpArray[i][2]);
+					ContextManager.getInstance().updateDoubleObject(i, ContextManager.VIT_Y, tmpArray[i][3]);
+					ContextManager.getInstance().updateDoubleObject(i, ContextManager.ACC_X, tmpArray[i][4]);
+					ContextManager.getInstance().updateDoubleObject(i, ContextManager.ACC_Y, tmpArray[i][5]);
+
+				}
 			}
 
 		}

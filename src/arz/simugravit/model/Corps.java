@@ -16,9 +16,13 @@ public class Corps {
 	
 	private double _posY;
 	
-	private double _normVit;
+	private double _vitX;
 	
-	private double _orienVit;
+	private double _vitY;
+	
+	private double _aX;
+	
+	private double _aY;
 	
 	private boolean _isMobile;
 	
@@ -26,6 +30,8 @@ public class Corps {
 	public Corps() {
 		
 		setMobile(true);
+		_aX = 0;
+		_aY = 0;
 		
 	}
 
@@ -72,23 +78,43 @@ public class Corps {
 	}
 
 
-	public double getNormVit() {
-		return _normVit;
+	public double getVitY() {
+		return _vitY;
 	}
 
 
-	public void setNormVit(double normVit) {
-		_normVit = normVit;
+	public void setVitY(double vitY) {
+		_vitY = vitY;
 	}
 
 
-	public double getOrienVit() {
-		return _orienVit;
+	public double getVitX() {
+		return _vitX;
 	}
 
 
-	public void setOrienVit(double orienVit) {
-		_orienVit = orienVit;
+	public void setVitX(double vitX) {
+		_vitX = vitX;
+	}
+
+
+	public double getaX() {
+		return _aX;
+	}
+
+
+	public void setaX(double aX) {
+		_aX = aX;
+	}
+
+
+	public double getaY() {
+		return _aY;
+	}
+
+
+	public void setaY(double aY) {
+		_aY = aY;
 	}
 
 }

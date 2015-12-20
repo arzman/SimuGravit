@@ -4,6 +4,7 @@ package arz.simugravit.application;
 import java.util.ArrayList;
 
 import arz.simugravit.application.exception.SimuApplicationException;
+import arz.simugravit.application.simulation.SimulationManager;
 import arz.simugravit.model.Corps;
 
 /**
@@ -19,9 +20,13 @@ public class ContextManager {
 
 	public static final int POS_Y = 2;
 
-	public static final int NORME_VIT = 3;
+	public static final int VIT_X = 3;
 
-	public static final int ORIEN_VIT = 4;
+	public static final int VIT_Y = 4;
+
+	public static final int ACC_X = 6;
+
+	public static final int ACC_Y = 7;
 
 	public static final int IS_MOBILE = 5;
 
@@ -87,19 +92,19 @@ public class ContextManager {
 				switch (numField) {
 
 				case MASSE:
-					c.setMasse(Double.parseDouble(value));
+					updateDoubleObject(num, MASSE, Double.parseDouble(value));
 					break;
 				case POS_X:
-					c.setPosX(Double.parseDouble(value));
+					updateDoubleObject(num, POS_X, Double.parseDouble(value));
 					break;
 				case POS_Y:
-					c.setPosY(Double.parseDouble(value));
+					updateDoubleObject(num, POS_Y, Double.parseDouble(value));
 					break;
-				case NORME_VIT:
-					c.setNormVit(Double.parseDouble(value));
+				case VIT_X:
+					updateDoubleObject(num, VIT_X, Double.parseDouble(value));
 					break;
-				case ORIEN_VIT:
-					c.setOrienVit(Double.parseDouble(value));
+				case VIT_Y:
+					updateDoubleObject(num, VIT_Y, Double.parseDouble(value));
 					break;
 				case IS_MOBILE:
 					c.setMobile(Boolean.parseBoolean(value));
@@ -151,11 +156,17 @@ public class ContextManager {
 			case POS_Y:
 				res = c.getPosY();
 				break;
-			case NORME_VIT:
-				res = c.getNormVit();
+			case VIT_X:
+				res = c.getVitX();
 				break;
-			case ORIEN_VIT:
-				res = c.getOrienVit();
+			case VIT_Y:
+				res = c.getVitY();
+				break;
+			case ACC_X:
+				res = c.getaX();
+				break;
+			case ACC_Y:
+				res = c.getaY();
 				break;
 			default:
 				throw new SimuApplicationException("Champ invalide");
@@ -191,13 +202,12 @@ public class ContextManager {
 	}
 
 	public void updateDoubleObject(int num, int numField, double value) throws SimuApplicationException {
-		
-		
+
 		if (num >= NB_OBJECT) {
 
 			throw new SimuApplicationException("Le numéro du corps est invalide : " + num);
 		} else {
-
+			
 			Corps c = _corpsList.get(num);
 
 			try {
@@ -208,16 +218,38 @@ public class ContextManager {
 					c.setMasse(value);
 					break;
 				case POS_X:
+
+					if (value < 0) {
+						value = 0;
+					}
+					if (value > SimulationManager.getInstance().getMaxX()) {
+						value = SimulationManager.getInstance().getMaxX();
+					}
+
 					c.setPosX(value);
 					break;
 				case POS_Y:
+
+					if (value < 0) {
+						value = 0;
+					}
+					if (value > SimulationManager.getInstance().getMaxY()) {
+						value = SimulationManager.getInstance().getMaxY();
+					}
+
 					c.setPosY(value);
 					break;
-				case NORME_VIT:
-					c.setNormVit(value);
+				case VIT_X:
+					c.setVitX(value);
 					break;
-				case ORIEN_VIT:
-					c.setOrienVit(value);
+				case VIT_Y:
+					c.setVitY(value);
+					break;
+				case ACC_X:
+					c.setaX(value);
+					break;
+				case ACC_Y:
+					c.setaY(value);
 					break;
 				default:
 					throw new SimuApplicationException("Champ invalide");
@@ -230,7 +262,7 @@ public class ContextManager {
 
 			}
 		}
-		
+
 	}
 
 }

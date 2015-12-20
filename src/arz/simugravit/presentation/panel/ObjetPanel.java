@@ -161,7 +161,12 @@ public class ObjetPanel extends JPanel {
 		gbc_nrmVitFld.gridx = 1;
 		gbc_nrmVitFld.gridy = 0;
 		vitesseGroup.add(_nrmVitFld, gbc_nrmVitFld);
-		_nrmVitFld.setText(String.valueOf(ContextManager.getInstance().getDoubleAttributeValue(_num, ContextManager.NORME_VIT)));
+
+		double vx = ContextManager.getInstance().getDoubleAttributeValue(_num, ContextManager.VIT_X);
+		double vy = ContextManager.getInstance().getDoubleAttributeValue(_num, ContextManager.VIT_Y);
+		double n = Math.sqrt(vx * vx + vy * vy);
+
+		_nrmVitFld.setText(String.valueOf(n));
 
 		JLabel nrmVitUnitLbl = new JLabel("m/s");
 		GridBagConstraints gbc_nrmVitUnitLbl = new GridBagConstraints();
@@ -187,7 +192,19 @@ public class ObjetPanel extends JPanel {
 		gbc_anglVitFld.gridx = 1;
 		gbc_anglVitFld.gridy = 1;
 		vitesseGroup.add(_anglVitFld, gbc_anglVitFld);
-		_anglVitFld.setText(String.valueOf(ContextManager.getInstance().getDoubleAttributeValue(_num, ContextManager.ORIEN_VIT)));
+
+		double angle;
+		if (vx != 0) {
+			angle = Math.atan(vy / vx);
+		} else {
+			if (vy > 0) {
+				angle = 90;
+			} else {
+				angle = -90;
+			}
+		}
+
+		_anglVitFld.setText(String.valueOf(angle));
 
 		JLabel anglVitUnitLbl = new JLabel("degr\u00E9s");
 		GridBagConstraints gbc_anglVitUnitLbl = new GridBagConstraints();
@@ -286,10 +303,19 @@ public class ObjetPanel extends JPanel {
 	public void writeObject() throws SimuApplicationException {
 
 		ContextManager.getInstance().updateObject(_num, ContextManager.IS_MOBILE, String.valueOf(_isMobilChck.isSelected()));
+		ContextManager.getInstance().updateObject(_num, ContextManager.MASSE, _massFld.getText());
+
 		ContextManager.getInstance().updateObject(_num, ContextManager.POS_X, _posXFld.getText());
 		ContextManager.getInstance().updateObject(_num, ContextManager.POS_Y, _posYFld.getText());
-		ContextManager.getInstance().updateObject(_num, ContextManager.NORME_VIT, _nrmVitFld.getText());
-		ContextManager.getInstance().updateObject(_num, ContextManager.ORIEN_VIT, _anglVitFld.getText());
+
+		ContextManager.getInstance().updateDoubleObject(_num, ContextManager.ACC_X, 0.0);
+		ContextManager.getInstance().updateDoubleObject(_num, ContextManager.ACC_Y, 0.0);
+
+		double n = Double.parseDouble(_nrmVitFld.getText());
+		double a = Double.parseDouble(_anglVitFld.getText());
+
+		ContextManager.getInstance().updateDoubleObject(_num, ContextManager.VIT_X, n * Math.cos(a * Math.PI / 180));
+		ContextManager.getInstance().updateDoubleObject(_num, ContextManager.VIT_Y, n * Math.sin(a * Math.PI / 180));
 
 	}
 

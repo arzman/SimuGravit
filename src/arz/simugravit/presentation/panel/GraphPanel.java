@@ -20,8 +20,6 @@ public class GraphPanel extends JPanel{
 	private int _width;
 	
 	private int _height;
-	
-	private final double deg_to_rad = Math.PI/180;
 
 	public GraphPanel(int width, int height) {
 		
@@ -44,21 +42,35 @@ public class GraphPanel extends JPanel{
 		g.fillRect(0, 0, _width, _height);
 
 		
-		g.setColor(Color.RED);
+		
 		for(int i=0;i<ContextManager.getInstance().getNbrObject();i++){
-					
+			g.setColor(Color.RED);
 			try {
 				//System.out.println("Draw "+i+" at "+SimulationManager.getInstance().getXfor(i)+" , "+SimulationManager.getInstance().getYfor(i));
 				int x=SimulationManager.getInstance().getXfor(i);
 				int y=SimulationManager.getInstance().getYfor(i);
 				
-				double ang = ContextManager.getInstance().getDoubleAttributeValue(i, ContextManager.ORIEN_VIT);
+				double vx = ContextManager.getInstance().getDoubleAttributeValue(i, ContextManager.VIT_X);
+				double vy = ContextManager.getInstance().getDoubleAttributeValue(i, ContextManager.VIT_Y);
 				
-				int dx=(int) (20*Math.cos(ang*deg_to_rad));
-				int dy=(int) (20*Math.sin(ang*deg_to_rad));
+				double n = Math.sqrt( vx*vx + vy*vy);
+				int dx= (int) (20*vx/n);
+				int dy= (int) (20*vy/n);
 				
 				g.fillOval(x-5, y-5, 10, 10);
+				g.setColor(Color.BLUE);
 				g.drawLine(x, y, x+dx, y-dy);
+				
+				double ax = ContextManager.getInstance().getDoubleAttributeValue(i, ContextManager.ACC_X);
+				double ay = ContextManager.getInstance().getDoubleAttributeValue(i, ContextManager.ACC_Y);
+				
+				double na = Math.sqrt( ax*ax + ay*ay);
+				int adx= (int) (20*ax/na);
+				int ady= (int) (20*ay/na);
+				
+				g.setColor(Color.GREEN);
+				g.drawLine(x, y, x+adx, y-ady);
+				
 			} catch (SimuApplicationException e) {
 				// Allo Houston !!!
 				//TODO stopper la simu et logguer un machin
