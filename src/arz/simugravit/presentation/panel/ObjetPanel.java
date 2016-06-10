@@ -50,9 +50,6 @@ public class ObjetPanel extends JPanel {
 		GridBagConstraints gbc_positionGroup = new GridBagConstraints();
 		gbc_positionGroup.insets = new Insets(0, 0, 5, 5);
 		gbc_positionGroup.fill = GridBagConstraints.HORIZONTAL;
-		gbc_positionGroup.gridx = 0;
-		gbc_positionGroup.gridy = 0;
-		add(positionGroup, gbc_positionGroup);
 		GridBagLayout gbl_positionGroup = new GridBagLayout();
 		gbl_positionGroup.columnWeights = new double[] { 0.0, 1.0, 0.0 };
 		positionGroup.setLayout(gbl_positionGroup);
