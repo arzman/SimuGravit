@@ -130,6 +130,8 @@ public class ObjetPanel extends JPanel {
 		gbc_centerBtn.gridy = 0;
 		positionBtnPanel.add(_centerBtn, gbc_centerBtn);
 
+		add(positionGroup);
+
 		JPanel vitesseGroup = new JPanel();
 		vitesseGroup.setBorder(new TitledBorder(null, "Vitesse", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		GridBagConstraints gbc_vitesseGroup = new GridBagConstraints();
